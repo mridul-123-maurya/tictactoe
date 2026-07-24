@@ -32,8 +32,8 @@ const alldisable=()=>{
         k.disabled=true;
     }
 }
-let m=false;
 const checkwinner = () => {
+    let if_result_comes=false
     for(let pattern of winpatterns){
         let pos1val=btn[pattern[0]].innerText;
         let pos2val=btn[pattern[1]].innerText;
@@ -42,14 +42,27 @@ const checkwinner = () => {
             if(pos1val===pos2val &&pos2val===pos3val){
                 msg.innerText=`Winner is ${pos1val}`;
                 win.classList.remove("win");
+                if_result_comes=true;
                 alldisable();
-                m=true;
             }
         }
     }
-    if(!m){
-        msg.innerText="there is tie between X and O";
+    if(!if_result_comes){
+        allfilled();
     }
-    
 }
+const allfilled =()=>{
+    let allfill=true
+    for(m of btn){
+        if(m.innerText===""){
+            allfill=false;
+            break;
+        }
+    }
+    if(allfill){
+        msg.innerText="Game is Tied";
+        win.classList.remove("win");
+    }
+}
+reset.addEventListener("click",start);
 newgame.addEventListener("click",start);
