@@ -2,7 +2,7 @@ let btn=document.querySelectorAll(".btn1")
 let reset=document.querySelector("#reset-btn")
 let win=document.querySelector(".win")
 let msg=document.querySelector("#msg")
-let newgame=document.querySelector("#")
+let newgame=document.querySelector("#newgame")
 const winpatterns=[[0,1,2],[0,3,6],[0,4,8],[6,7,8],[2,5,8],[3,4,5],[1,4,7],[2,4,6]];
 let turn=true;
 btn.forEach(btns => {
@@ -19,11 +19,20 @@ btn.forEach(btns => {
         checkwinner()
     })
 });
+function start(){
+    turn=true;
+    for(z of btn){
+        z.innerText="";
+        z.disabled=false;
+    }
+    win.classList.add("win");
+}
 const alldisable=()=>{
     for(k of btn){
         k.disabled=true;
     }
 }
+let m=false;
 const checkwinner = () => {
     for(let pattern of winpatterns){
         let pos1val=btn[pattern[0]].innerText;
@@ -34,8 +43,13 @@ const checkwinner = () => {
                 msg.innerText=`Winner is ${pos1val}`;
                 win.classList.remove("win");
                 alldisable();
+                m=true;
             }
         }
     }
-
+    if(!m){
+        msg.innerText="there is tie between X and O";
+    }
+    
 }
+newgame.addEventListener("click",start);
